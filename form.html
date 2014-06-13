@@ -16,6 +16,7 @@ $(".btn").click(doSomething);
 });
 
 function doSomething(){
+$('#myLabel').show();
 val = 2;
 x=val.valueAsNumber;
 t = (x*2.12)/10000;
@@ -39,10 +40,11 @@ dataType:"json"
 
 
 ).done(function(data){
-alert(data.Accounts[0].totalVal);
+//alert(data.Accounts[0].totalVal);
 t = formatDollar((data.Accounts[0].totalVal * 2.12)/10000)
 //$('#myLabel').text(data.Accounts[0].totalVal);
 $('#myLabel').text(t);
+$('#myLabel').show();
 //alert(data);
 
 } );
