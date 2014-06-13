@@ -1,0 +1,73 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twitter Bootstrap Version2.0 inline form layout example</title> 
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function (){
+$(".btn").click(doSomething);
+
+});
+
+function doSomething(){
+val = 2;
+x=val.valueAsNumber;
+t = (x*2.12)/10000;
+dol = formatDollar(t);
+$("#myLabel").text(dol);
+calladdressLookup($(".address").val());
+}
+
+function calladdressLookup(address)
+{
+$.ajax(
+{
+url:"http://maps.raleighnc.gov/arcgis/rest/services/Parcels/MapServer/exts/PropertySOE/RealEstateSearch",
+data:
+{f:"json",
+type:"address",
+values:'["'+ address +'"]'
+},
+dataType:"json"
+}
+
+
+).done(function(data){
+alert(data.Accounts[0].totalVal);
+t = formatDollar((data.Accounts[0].totalVal * 2.12)/10000)
+//$('#myLabel').text(data.Accounts[0].totalVal);
+$('#myLabel').text(t);
+//alert(data);
+
+} );
+
+
+}
+function formatDollar(num) {
+    var p = num.toFixed(2).split(".");
+    return "$" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+        return  num + (i && !(i % 3) ? "," : "") + acc;
+    }, "") + "." + p[1];
+}
+
+</script>
+</head>
+<body>
+  <label id="landValue">Calculate increase in property tax by address</label>
+  </br>
+  <!--<input type="number" id = "propVal" class="landValue" placeholder=200000>
+  <button type="submit" class="btn">Calculate</button>
+  </br>-->
+  <input type="text" class="address" placeholder="222 W Hargett St">
+  <button type="submit" class="btn">Calculate</button>
+  </br>
+  <label id="myLabel"></label>
+</body>
+</html>
+           
